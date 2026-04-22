@@ -33,6 +33,8 @@ import {
   SkipForward,
 } from "lucide-react";
 import { submitWaitlist, type WaitlistInput } from "@/lib/actions/waitlist";
+import { useLocale } from "@/lib/i18n/locale-context";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 type TeamSize = "solo" | "2_3" | "4_6" | "7_15" | "15_plus";
 type Branches = "1" | "2_3" | "4_10" | "10_plus";
@@ -75,49 +77,48 @@ const INITIAL: FormState = {
   start_timeline: "",
 };
 
-const TEAM_OPTIONS: { value: TeamSize; label: string; sub: string; emoji: string }[] = [
-  { value: "solo", label: "Solo", sub: "yo corto, yo cobro", emoji: "🧑‍🦱" },
-  { value: "2_3", label: "2 o 3", sub: "equipo chico", emoji: "👥" },
-  { value: "4_6", label: "4 a 6", sub: "equipo mediano", emoji: "👨‍👨‍👦" },
-  { value: "7_15", label: "7 a 15", sub: "ya es operación", emoji: "🧑‍🤝‍🧑" },
-  { value: "15_plus", label: "15+", sub: "una maquinaria", emoji: "🏗️" },
+const TEAM_META: { value: TeamSize; emoji: string }[] = [
+  { value: "solo", emoji: "🧑‍🦱" },
+  { value: "2_3", emoji: "👥" },
+  { value: "4_6", emoji: "👨‍👨‍👦" },
+  { value: "7_15", emoji: "🧑‍🤝‍🧑" },
+  { value: "15_plus", emoji: "🏗️" },
 ];
 
-const BRANCH_OPTIONS: { value: Branches; label: string; sub: string; emoji: string }[] = [
-  { value: "1", label: "1 local", sub: "empezamos acá", emoji: "💈" },
-  { value: "2_3", label: "2 o 3", sub: "expandiendo", emoji: "🏪" },
-  { value: "4_10", label: "4 a 10", sub: "cadena regional", emoji: "🏬" },
-  { value: "10_plus", label: "10+", sub: "franquicia", emoji: "🏙️" },
+const BRANCH_META: { value: Branches; emoji: string }[] = [
+  { value: "1", emoji: "💈" },
+  { value: "2_3", emoji: "🏪" },
+  { value: "4_10", emoji: "🏬" },
+  { value: "10_plus", emoji: "🏙️" },
 ];
 
-const SOFTWARE_OPTIONS: { value: Software; label: string; sub: string }[] = [
-  { value: "ninguno", label: "Nada 😬", sub: "a pulmón" },
-  { value: "fresha", label: "Fresha", sub: "" },
-  { value: "booksy", label: "Booksy", sub: "" },
-  { value: "agendapro", label: "AgendaPro", sub: "" },
-  { value: "planilla", label: "Planilla / Excel", sub: "old school" },
-  { value: "otro", label: "Otro", sub: "nos contás" },
+const SOFTWARE_META: { value: Software }[] = [
+  { value: "ninguno" },
+  { value: "fresha" },
+  { value: "booksy" },
+  { value: "agendapro" },
+  { value: "planilla" },
+  { value: "otro" },
 ];
 
-const INTEREST_OPTIONS: {
+const INTEREST_META: {
   value: Interest;
-  label: string;
   icon: typeof ScanFace;
   tone: "neon" | "violet" | "amber";
 }[] = [
-  { value: "face_id", label: "Face ID Check-in", icon: ScanFace, tone: "neon" },
-  { value: "crm", label: "CRM de clientes", icon: Users, tone: "neon" },
-  { value: "panel", label: "Panel del barbero", icon: Scissors, tone: "violet" },
-  { value: "finanzas", label: "Finanzas + comisiones", icon: CreditCard, tone: "violet" },
-  { value: "estadisticas", label: "Estadísticas en vivo", icon: LineChart, tone: "neon" },
-  { value: "reseñas", label: "Reseñas automáticas", icon: Star, tone: "amber" },
+  { value: "face_id", icon: ScanFace, tone: "neon" },
+  { value: "crm", icon: Users, tone: "neon" },
+  { value: "panel", icon: Scissors, tone: "violet" },
+  { value: "finanzas", icon: CreditCard, tone: "violet" },
+  { value: "estadisticas", icon: LineChart, tone: "neon" },
+  { value: "reseñas", icon: Star, tone: "amber" },
 ];
 
-const TIMELINE_OPTIONS: { value: Timeline; label: string; sub: string; emoji: string }[] = [
-  { value: "asap", label: "Ya, esta semana", sub: "no aguanto más", emoji: "🔥" },
-  { value: "1_mes", label: "En un mes", sub: "tranqui", emoji: "⚡" },
-  { value: "3_meses", label: "En 3 meses", sub: "planificando", emoji: "🗓️" },
-  { value: "explorando", label: "Explorando", sub: "curiosidad primero", emoji: "👀" },
+const TIMELINE_META: { value: Timeline; emoji: string }[] = [
+  { value: "asap", emoji: "🔥" },
+  { value: "1_mes", emoji: "⚡" },
+  { value: "3_meses", emoji: "🗓️" },
+  { value: "explorando", emoji: "👀" },
 ];
 
 type StepId =
@@ -147,12 +148,44 @@ const STEP_ORDER: StepId[] = [
 ];
 
 export function WaitlistModal({ onClose }: { onClose: () => void }) {
+  const { t: dict } = useLocale();
+  const t = dict.waitlist;
   const [step, setStep] = useState<StepId>("name");
   const [form, setForm] = useState<FormState>(INITIAL);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [alreadyRegistered, setAlreadyRegistered] = useState(false);
+
+  const teamOptions = TEAM_META.map((m) => ({
+    value: m.value,
+    emoji: m.emoji,
+    label: t.steps.team.options[m.value].label,
+    sub: t.steps.team.options[m.value].sub,
+  }));
+  const branchOptions = BRANCH_META.map((m) => ({
+    value: m.value,
+    emoji: m.emoji,
+    label: t.steps.branches.options[m.value].label,
+    sub: t.steps.branches.options[m.value].sub,
+  }));
+  const softwareOptions = SOFTWARE_META.map((m) => ({
+    value: m.value,
+    label: t.steps.software.options[m.value].label,
+    sub: t.steps.software.options[m.value].sub,
+  }));
+  const interestOptions = INTEREST_META.map((m) => ({
+    value: m.value,
+    icon: m.icon,
+    tone: m.tone,
+    label: t.steps.interests.options[m.value],
+  }));
+  const timelineOptions = TIMELINE_META.map((m) => ({
+    value: m.value,
+    emoji: m.emoji,
+    label: t.steps.timeline.options[m.value].label,
+    sub: t.steps.timeline.options[m.value].sub,
+  }));
 
   const utmRef = useRef<WaitlistInput["utm"]>({});
 
@@ -227,28 +260,28 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
     const e: Partial<Record<keyof FormState, string>> = {};
     switch (step) {
       case "name":
-        if (form.full_name.trim().length < 2) e.full_name = "Contanos tu nombre";
+        if (form.full_name.trim().length < 2) e.full_name = t.steps.name.error;
         break;
       case "email":
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
-          e.email = "Dejame un email válido";
+          e.email = t.steps.email.error;
         break;
       case "team":
-        if (!form.team_size) e.team_size = "Elegí una opción";
+        if (!form.team_size) e.team_size = t.steps.team.error;
         break;
       case "branches":
-        if (!form.branches_count) e.branches_count = "Elegí una opción";
+        if (!form.branches_count) e.branches_count = t.steps.branches.error;
         break;
       case "interests":
-        if (form.interests.length === 0) e.interests = "Tocá al menos una";
+        if (form.interests.length === 0) e.interests = t.steps.interests.error;
         break;
       case "timeline":
-        if (!form.start_timeline) e.start_timeline = "Elegí una opción";
+        if (!form.start_timeline) e.start_timeline = t.steps.timeline.error;
         break;
     }
     setErrors(e);
     return Object.keys(e).length === 0;
-  }, [step, form]);
+  }, [step, form, t]);
 
   const handleSubmit = useCallback(async () => {
     setSubmitting(true);
@@ -308,7 +341,7 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
         key="waitlist-root"
         role="dialog"
         aria-modal="true"
-        aria-label="Cuestionario de waitlist"
+        aria-label="Waitlist form"
         className="fixed inset-0 z-[100] flex flex-col"
         onKeyDown={handleKey}
         tabIndex={-1}
@@ -334,7 +367,7 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
             onClick={goBack}
             disabled={step === "name" || step === "success" || submitting}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-mist-300 transition-colors hover:border-white/20 hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-30"
-            aria-label="Atrás"
+            aria-label={t.back}
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
@@ -361,7 +394,7 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
             type="button"
             onClick={onClose}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-mist-300 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
-            aria-label="Cerrar"
+            aria-label={t.close}
           >
             <X className="h-4 w-4" />
           </button>
@@ -380,19 +413,21 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
               >
                 {step === "name" && (
                   <StepShell
-                    kicker="Paso 1 de 10"
+                    kicker={t.steps.name.step}
                     title={
                       <>
-                        Hola, ¿<span className="gradient-text-neon">cómo te llamás?</span>
+                        {t.steps.name.titleA}
+                        <span className="gradient-text-neon">{t.steps.name.titleAccent}</span>
+                        {t.steps.name.titleB}
                       </>
                     }
-                    subtitle="Vamos a tardar menos de 60 segundos."
+                    subtitle={t.steps.name.sub}
                   >
                     <BigInput
                       icon={<User className="h-5 w-5" />}
                       value={form.full_name}
                       onChange={(v) => set("full_name", v)}
-                      placeholder="Tu nombre"
+                      placeholder={t.steps.name.placeholder}
                       autoFocus
                       error={errors.full_name}
                       maxLength={80}
@@ -402,19 +437,21 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
 
                 {step === "email" && (
                   <StepShell
-                    kicker="Paso 2 de 10"
+                    kicker={t.steps.email.step}
                     title={
                       <>
-                        Un email para <span className="gradient-text-neon">mantenerte al tanto</span>
+                        {t.steps.email.titleA}
+                        <span className="gradient-text-neon">{t.steps.email.titleAccent}</span>
+                        {t.steps.email.titleB}
                       </>
                     }
-                    subtitle="Te vamos a avisar del lanzamiento y mandarte la demo."
+                    subtitle={t.steps.email.sub}
                   >
                     <BigInput
                       icon={<Mail className="h-5 w-5" />}
                       value={form.email}
                       onChange={(v) => set("email", v)}
-                      placeholder="tu@barberia.com"
+                      placeholder={t.steps.email.placeholder}
                       type="email"
                       autoFocus
                       error={errors.email}
@@ -425,84 +462,92 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
 
                 {step === "phone" && (
                   <StepShell
-                    kicker="Paso 3 de 10"
+                    kicker={t.steps.phone.step}
                     title={
                       <>
-                        Tu <span className="gradient-text-neon">WhatsApp</span> (opcional)
+                        {t.steps.phone.titleA}
+                        <span className="gradient-text-neon">{t.steps.phone.titleAccent}</span>
+                        {t.steps.phone.titleB}
                       </>
                     }
-                    subtitle="Si preferís, te escribimos por acá. No molestamos, prometido."
+                    subtitle={t.steps.phone.sub}
                   >
                     <BigInput
                       icon={<MessageCircle className="h-5 w-5" />}
                       value={form.phone}
                       onChange={(v) => set("phone", v)}
-                      placeholder="+54 9 351 000 0000"
+                      placeholder={t.steps.phone.placeholder}
                       type="tel"
                       autoFocus
                       maxLength={40}
                     />
-                    <SkipHint onSkip={advance} />
+                    <SkipHint label={t.skip} onSkip={advance} />
                   </StepShell>
                 )}
 
                 {step === "barbershop" && (
                   <StepShell
-                    kicker="Paso 4 de 10"
+                    kicker={t.steps.barbershop.step}
                     title={
                       <>
-                        ¿Cómo se llama <span className="gradient-text-neon">tu barbería?</span>
+                        {t.steps.barbershop.titleA}
+                        <span className="gradient-text-neon">{t.steps.barbershop.titleAccent}</span>
+                        {t.steps.barbershop.titleB}
                       </>
                     }
-                    subtitle="Para ver tu marca en el panel cuando te invitemos."
+                    subtitle={t.steps.barbershop.sub}
                   >
                     <BigInput
                       icon={<Store className="h-5 w-5" />}
                       value={form.barbershop_name}
                       onChange={(v) => set("barbershop_name", v)}
-                      placeholder="Ej: Monaco Smart Barber"
+                      placeholder={t.steps.barbershop.placeholder}
                       autoFocus
                       maxLength={120}
                     />
-                    <SkipHint onSkip={advance} />
+                    <SkipHint label={t.skip} onSkip={advance} />
                   </StepShell>
                 )}
 
                 {step === "city" && (
                   <StepShell
-                    kicker="Paso 5 de 10"
+                    kicker={t.steps.city.step}
                     title={
                       <>
-                        ¿De qué <span className="gradient-text-neon">ciudad sos?</span>
+                        {t.steps.city.titleA}
+                        <span className="gradient-text-neon">{t.steps.city.titleAccent}</span>
+                        {t.steps.city.titleB}
                       </>
                     }
-                    subtitle="Nos ayuda a priorizar qué zonas lanzamos primero."
+                    subtitle={t.steps.city.sub}
                   >
                     <BigInput
                       icon={<MapPin className="h-5 w-5" />}
                       value={form.city}
                       onChange={(v) => set("city", v)}
-                      placeholder="Ej: Córdoba, AR"
+                      placeholder={t.steps.city.placeholder}
                       autoFocus
                       maxLength={80}
                     />
-                    <SkipHint onSkip={advance} />
+                    <SkipHint label={t.skip} onSkip={advance} />
                   </StepShell>
                 )}
 
                 {step === "team" && (
                   <StepShell
-                    kicker="Paso 6 de 10"
+                    kicker={t.steps.team.step}
                     title={
                       <>
-                        ¿Cuántos <span className="gradient-text-neon">barberos</span> son?
+                        {t.steps.team.titleA}
+                        <span className="gradient-text-neon">{t.steps.team.titleAccent}</span>
+                        {t.steps.team.titleB}
                       </>
                     }
-                    subtitle="Incluite a vos si cortás."
+                    subtitle={t.steps.team.sub}
                     error={errors.team_size}
                   >
                     <CardGrid
-                      options={TEAM_OPTIONS}
+                      options={teamOptions}
                       value={form.team_size}
                       onChange={(v) => {
                         set("team_size", v);
@@ -515,17 +560,19 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
 
                 {step === "branches" && (
                   <StepShell
-                    kicker="Paso 7 de 10"
+                    kicker={t.steps.branches.step}
                     title={
                       <>
-                        ¿Cuántas <span className="gradient-text-neon">sucursales</span> tenés?
+                        {t.steps.branches.titleA}
+                        <span className="gradient-text-neon">{t.steps.branches.titleAccent}</span>
+                        {t.steps.branches.titleB}
                       </>
                     }
-                    subtitle="studiOS escala a franquicia, pero empezamos donde estés."
+                    subtitle={t.steps.branches.sub}
                     error={errors.branches_count}
                   >
                     <CardGrid
-                      options={BRANCH_OPTIONS}
+                      options={branchOptions}
                       value={form.branches_count}
                       onChange={(v) => {
                         set("branches_count", v);
@@ -538,16 +585,18 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
 
                 {step === "software" && (
                   <StepShell
-                    kicker="Paso 8 de 10"
+                    kicker={t.steps.software.step}
                     title={
                       <>
-                        ¿Qué usás <span className="gradient-text-neon">hoy?</span>
+                        {t.steps.software.titleA}
+                        <span className="gradient-text-neon">{t.steps.software.titleAccent}</span>
+                        {t.steps.software.titleB}
                       </>
                     }
-                    subtitle="Si ya tenés algo, migramos todo en 48 hs."
+                    subtitle={t.steps.software.sub}
                   >
                     <CardGrid
-                      options={SOFTWARE_OPTIONS}
+                      options={softwareOptions}
                       value={form.current_software}
                       onChange={(v) => {
                         set("current_software", v);
@@ -556,22 +605,25 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
                       columns={2}
                       compact
                     />
-                    <SkipHint onSkip={advance} />
+                    <SkipHint label={t.skip} onSkip={advance} />
                   </StepShell>
                 )}
 
                 {step === "interests" && (
                   <StepShell
-                    kicker="Paso 9 de 10"
+                    kicker={t.steps.interests.step}
                     title={
                       <>
-                        ¿Qué módulos te <span className="gradient-text-neon">vuelan la cabeza?</span>
+                        {t.steps.interests.titleA}
+                        <span className="gradient-text-neon">{t.steps.interests.titleAccent}</span>
+                        {t.steps.interests.titleB}
                       </>
                     }
-                    subtitle="Elegí todos los que te interesen."
+                    subtitle={t.steps.interests.sub}
                     error={errors.interests}
                   >
                     <InterestsGrid
+                      options={interestOptions}
                       value={form.interests}
                       onToggle={(v) => {
                         const exists = form.interests.includes(v);
@@ -588,17 +640,19 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
 
                 {step === "timeline" && (
                   <StepShell
-                    kicker="Paso 10 de 10"
+                    kicker={t.steps.timeline.step}
                     title={
                       <>
-                        ¿<span className="gradient-text-neon">Cuándo</span> arrancás?
+                        {t.steps.timeline.titleA}
+                        <span className="gradient-text-neon">{t.steps.timeline.titleAccent}</span>
+                        {t.steps.timeline.titleB}
                       </>
                     }
-                    subtitle="Para ordenarnos con la implementación."
+                    subtitle={t.steps.timeline.sub}
                     error={errors.start_timeline}
                   >
                     <CardGrid
-                      options={TIMELINE_OPTIONS}
+                      options={timelineOptions}
                       value={form.start_timeline}
                       onChange={(v) => set("start_timeline", v)}
                       columns={2}
@@ -613,6 +667,7 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
 
                 {step === "success" && (
                   <SuccessScreen
+                    t={t.success}
                     alreadyRegistered={alreadyRegistered}
                     name={form.full_name}
                     onClose={onClose}
@@ -630,7 +685,7 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
               <kbd className="rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono">
                 Enter
               </kbd>
-              <span>para continuar</span>
+              <span>{t.kbdHint}</span>
             </div>
             <button
               type="button"
@@ -641,16 +696,16 @@ export function WaitlistModal({ onClose }: { onClose: () => void }) {
               {submitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Enviando…
+                  {t.sending}
                 </>
               ) : step === "timeline" ? (
                 <>
-                  Sumarme a la waitlist
+                  {t.submit}
                   <Zap className="h-4 w-4" />
                 </>
               ) : (
                 <>
-                  Siguiente
+                  {t.next}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </>
               )}
@@ -843,15 +898,22 @@ function CardGrid<T extends string>({
 }
 
 function InterestsGrid({
+  options,
   value,
   onToggle,
 }: {
+  options: {
+    value: Interest;
+    icon: typeof ScanFace;
+    tone: "neon" | "violet" | "amber";
+    label: string;
+  }[];
   value: Interest[];
   onToggle: (v: Interest) => void;
 }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      {INTEREST_OPTIONS.map((opt, i) => {
+      {options.map((opt, i) => {
         const Icon = opt.icon;
         const selected = value.includes(opt.value);
         const toneBg =
@@ -902,7 +964,7 @@ function InterestsGrid({
   );
 }
 
-function SkipHint({ onSkip }: { onSkip: () => void }) {
+function SkipHint({ label, onSkip }: { label: string; onSkip: () => void }) {
   return (
     <button
       type="button"
@@ -910,7 +972,7 @@ function SkipHint({ onSkip }: { onSkip: () => void }) {
       className="mt-4 inline-flex items-center gap-1.5 text-sm text-mist-400 transition-colors hover:text-mist-200"
     >
       <SkipForward className="h-3.5 w-3.5" />
-      Saltar este paso
+      {label}
     </button>
   );
 }
@@ -918,10 +980,12 @@ function SkipHint({ onSkip }: { onSkip: () => void }) {
 /* ---------- Success ---------- */
 
 function SuccessScreen({
+  t,
   alreadyRegistered,
   name,
   onClose,
 }: {
+  t: Dictionary["waitlist"]["success"];
   alreadyRegistered: boolean;
   name: string;
   onClose: () => void;
@@ -954,14 +1018,14 @@ function SuccessScreen({
       >
         {alreadyRegistered ? (
           <>
-            Ya estás <span className="gradient-text-neon">dentro</span>
+            {t.titleExisting}
             {firstName ? `, ${firstName}` : ""}.
           </>
         ) : (
           <>
-            Listo{firstName ? `, ${firstName}` : ""}.
+            {t.titleNew.replace("{name}", firstName || "").replace(/, \./, ".")}
             <br />
-            <span className="gradient-text-neon">Estás en la waitlist.</span>
+            <span className="gradient-text-neon">{t.titleNewAccent}</span>
           </>
         )}
       </motion.h2>
@@ -972,8 +1036,7 @@ function SuccessScreen({
         transition={{ delay: 0.4, duration: 0.5 }}
         className="mt-5 max-w-xl text-base text-mist-300 sm:text-lg"
       >
-        Te escribimos en menos de 24 hs para coordinar la demo. Si querés
-        adelantar el turno, dale play al WhatsApp.
+        {t.body}
       </motion.p>
 
       <motion.div
@@ -989,14 +1052,14 @@ function SuccessScreen({
           className="group inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-[#5eecaa] to-[#24e08c] px-6 text-sm font-semibold text-ink-950 shadow-[0_8px_28px_-8px_rgba(36,224,140,0.6)] transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_12px_40px_-8px_rgba(36,224,140,0.8)] active:scale-[0.98]"
         >
           <MessageCircle className="h-4 w-4" />
-          Hablar por WhatsApp
+          {t.ctaWhatsapp}
         </a>
         <button
           type="button"
           onClick={onClose}
           className="inline-flex h-12 items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-semibold text-white transition-colors hover:border-white/20 hover:bg-white/[0.06]"
         >
-          Volver al landing
+          {t.ctaClose}
         </button>
       </motion.div>
 
@@ -1007,15 +1070,15 @@ function SuccessScreen({
         className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-mist-500"
       >
         <span className="inline-flex items-center gap-1.5">
-          <Building2 className="h-3.5 w-3.5" /> Sin tarjeta
+          <Building2 className="h-3.5 w-3.5" /> {t.perk1}
         </span>
         <span className="h-1 w-1 rounded-full bg-white/20" />
         <span className="inline-flex items-center gap-1.5">
-          <CalendarClock className="h-3.5 w-3.5" /> Respuesta en 24 hs
+          <CalendarClock className="h-3.5 w-3.5" /> {t.perk2}
         </span>
         <span className="h-1 w-1 rounded-full bg-white/20" />
         <span className="inline-flex items-center gap-1.5">
-          <Zap className="h-3.5 w-3.5" /> Implementación en 48 hs
+          <Zap className="h-3.5 w-3.5" /> {t.perk3}
         </span>
       </motion.div>
     </div>

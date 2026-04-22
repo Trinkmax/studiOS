@@ -3,8 +3,10 @@
 import { Section } from "@/components/ui/section";
 import { AuroraBackground } from "@/components/ui/background";
 import { Reveal } from "@/components/ui/reveal";
+import { useLocale } from "@/lib/i18n/locale-context";
 
 export function TonyVideoSection() {
+  const { t } = useLocale();
   return (
     <Section
       id="video-tony"
@@ -15,11 +17,11 @@ export function TonyVideoSection() {
         <Reveal>
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-mist-300">
-              ● La historia de Tony
+              {t.tonyVideo.kicker}
             </span>
             <h2 className="mt-6 font-display text-balance text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.05] tracking-tight text-white">
-              Así lo contó{" "}
-              <span className="gradient-text-neon">un barbero real.</span>
+              {t.tonyVideo.titleTop}{" "}
+              <span className="gradient-text-neon">{t.tonyVideo.titleBottom}</span>
             </h2>
           </div>
         </Reveal>

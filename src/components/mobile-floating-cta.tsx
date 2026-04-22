@@ -4,11 +4,13 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useWaitlist } from "@/components/waitlist/waitlist-provider";
+import { useLocale } from "@/lib/i18n/locale-context";
 
 export function MobileFloatingCta() {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(false);
   const waitlist = useWaitlist();
+  const { t } = useLocale();
 
   useMotionValueEvent(scrollY, "change", (y) => {
     setVisible(y > 360);
@@ -31,7 +33,7 @@ export function MobileFloatingCta() {
         onClick={waitlist.open}
         className="group inline-flex w-full max-w-md items-center justify-between rounded-full bg-gradient-to-b from-neon-300 to-neon-500 px-5 py-3.5 text-sm font-semibold text-ink-950 shadow-[0_18px_40px_-10px_rgba(36,224,140,0.55),0_0_0_1px_rgba(255,255,255,0.12)_inset]"
       >
-        <span>Pedí tu demo</span>
+        <span>{t.mobileCta}</span>
         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </button>
     </motion.div>

@@ -4,6 +4,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://studios.com.ar";
 
 const routes = [
   "/",
+  "/en",
   "/check-in",
   "/panel",
   "/crm",
@@ -18,6 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}${path}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
-    priority: path === "/" ? 1 : 0.8,
+    priority: path === "/" || path === "/en" ? 1 : 0.8,
   }));
 }

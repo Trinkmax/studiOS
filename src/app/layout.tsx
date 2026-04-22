@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { CommandPalette } from "@/components/command-palette";
-import { WaitlistProvider } from "@/components/waitlist/waitlist-provider";
+import { AppShell } from "@/components/app-shell";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://studios.com.ar";
@@ -25,6 +24,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "studiOS" }],
   creator: "studiOS",
+  alternates: {
+    canonical: SITE_URL,
+    languages: {
+      "es-AR": SITE_URL,
+      en: `${SITE_URL}/en`,
+      "x-default": SITE_URL,
+    },
+  },
   openGraph: {
     title: "studiOS — Tu barbería, en piloto automático",
     description:
@@ -67,10 +74,7 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className="dark">
       <body className="font-sans antialiased overflow-x-hidden">
-        <WaitlistProvider>
-          {children}
-          <CommandPalette />
-        </WaitlistProvider>
+        <AppShell>{children}</AppShell>
         <Analytics />
       </body>
     </html>

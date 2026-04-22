@@ -6,18 +6,11 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { Command, Menu, X } from "lucide-react";
+import { Command, Languages, Menu, X } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
 import { useWaitlist } from "@/components/waitlist/waitlist-provider";
-
-const links = [
-  { href: "/check-in", label: "Check-in" },
-  { href: "/panel", label: "Panel" },
-  { href: "/crm", label: "CRM" },
-  { href: "/estadisticas", label: "Estadísticas" },
-  { href: "/finanzas", label: "Finanzas" },
-  { href: "/equipo", label: "Equipo" },
-];
+import { useLocale } from "@/lib/i18n/locale-context";
+import { LOCALE_COOKIE } from "@/lib/i18n/config";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,6 +18,9 @@ export function Nav() {
   const [mac, setMac] = useState(true);
   const pathname = usePathname();
   const waitlist = useWaitlist();
+  const { locale, t } = useLocale();
+  const otherHref = locale === "en" ? "/" : "/en";
+  const otherCookie = locale === "en" ? "es" : "en";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -52,6 +48,12 @@ export function Nav() {
     window.dispatchEvent(ev);
   };
 
+  const persistLocale = () => {
+    // Override middleware heuristics on explicit user choice.
+    const oneYear = 60 * 60 * 24 * 365;
+    document.cookie = `${LOCALE_COOKIE}=${otherCookie}; path=/; max-age=${oneYear}; samesite=lax`;
+  };
+
   return (
     <header
       className={cn(
@@ -67,12 +69,12 @@ export function Nav() {
             : "bg-transparent h-12 sm:h-14"
         )}
       >
-        <Link href="/" className="shrink-0">
+        <Link href={locale === "en" ? "/en" : "/"} className="shrink-0">
           <Logo />
         </Link>
 
         <nav className="hidden md:flex items-center gap-0.5">
-          {links.map((l) => {
+          {t.nav.modules.map((l) => {
             const active = pathname === l.href;
             return (
               <Link
@@ -100,28 +102,37 @@ export function Nav() {
           <button
             type="button"
             onClick={openCmd}
-            aria-label="Buscar"
+            aria-label={t.nav.search}
             className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[11px] text-mist-400 transition-colors hover:text-white hover:bg-white/[0.06]"
           >
-            <span>Buscar</span>
+            <span>{t.nav.search}</span>
             <kbd className="inline-flex items-center gap-0.5 rounded border border-white/10 bg-white/[0.02] px-1 text-[10px]">
               {mac ? "⌘" : "Ctrl"}K
             </kbd>
           </button>
+          <Link
+            href={otherHref}
+            onClick={persistLocale}
+            aria-label={t.nav.switchTo}
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] h-9 px-3 text-xs font-medium text-mist-300 transition-colors hover:text-white hover:bg-white/[0.06]"
+          >
+            <Languages className="h-3.5 w-3.5" />
+            {t.nav.switchTo}
+          </Link>
           <Magnetic strength={0.2}>
             <button
               type="button"
               onClick={waitlist.open}
               className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white text-ink-950 h-9 px-4 text-sm font-medium hover:bg-neon-200 transition-colors"
             >
-              Pedí una demo
+              {t.nav.cta}
             </button>
           </Magnetic>
           <button
             type="button"
             className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.04] border border-white/10 text-white"
             onClick={() => setOpen((s) => !s)}
-            aria-label="Menú"
+            aria-label={t.nav.menu}
             aria-expanded={open}
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -140,7 +151,7 @@ export function Nav() {
           >
             <div className="glass-strong rounded-3xl p-3">
               <div className="flex flex-col">
-                {links.map((l) => {
+                {t.nav.modules.map((l) => {
                   const active = pathname === l.href;
                   return (
                     <Link
@@ -166,10 +177,20 @@ export function Nav() {
                 >
                   <span className="inline-flex items-center gap-2">
                     <Command className="h-3 w-3" />
-                    Buscar módulos
+                    {t.nav.searchFull}
                   </span>
                   <span className="text-[10px] text-mist-500">⌘K</span>
                 </button>
+                <Link
+                  href={otherHref}
+                  onClick={persistLocale}
+                  className="mt-1 inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-mist-200"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Languages className="h-3.5 w-3.5" />
+                    {t.nav.switchTo}
+                  </span>
+                </Link>
                 <button
                   type="button"
                   onClick={() => {
@@ -178,7 +199,7 @@ export function Nav() {
                   }}
                   className="mt-2 rounded-2xl bg-gradient-to-b from-neon-300 to-neon-500 text-ink-950 px-4 py-3 text-sm font-semibold text-center"
                 >
-                  Pedí una demo
+                  {t.nav.cta}
                 </button>
               </div>
             </div>

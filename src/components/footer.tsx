@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 import { Instagram, Linkedin, Youtube, Mail } from "lucide-react";
+import { useLocale } from "@/lib/i18n/locale-context";
 
 export function Footer() {
+  const { t } = useLocale();
+
   return (
     <footer className="relative border-t border-white/5 bg-ink-950/60 backdrop-blur px-5 sm:px-8 lg:px-12 py-16">
       <div className="mx-auto max-w-7xl">
@@ -10,8 +15,7 @@ export function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm text-mist-400">
-              El sistema operativo de la barbería moderna. Hecho en Córdoba,
-              Argentina — con gente que corta pelo y escribe código.
+              {t.footer.tagline}
             </p>
             <div className="mt-5 flex items-center gap-2">
               <SocialLink href="https://instagram.com" label="Instagram">
@@ -30,30 +34,30 @@ export function Footer() {
           </div>
 
           <FooterCol
-            title="Producto"
+            title={t.footer.product}
             links={[
               ["Face ID", "#face-id"],
-              ["Panel barberos", "#panel"],
-              ["CRM", "#crm"],
-              ["Finanzas", "#finanzas"],
-              ["Reseñas", "#resenas"],
+              [t.nav.modules[1].label, "#panel"],
+              [t.nav.modules[2].label, "#crm"],
+              [t.nav.modules[4].label, "#finanzas"],
+              ["Reviews", "#resenas"],
             ]}
           />
           <FooterCol
-            title="Compañía"
+            title={t.footer.company}
             links={[
               ["Monaco Barber", "https://www.google.com/search?q=monaco+barber+córdoba"],
-              ["Historia", "#top"],
-              ["Carreras", "#"],
-              ["Contacto", "mailto:hola@studios.app"],
+              [t.footer.history, "#top"],
+              [t.footer.careers, "#"],
+              [t.footer.contact, "mailto:hola@studios.app"],
             ]}
           />
           <FooterCol
-            title="Legales"
+            title={t.footer.legal}
             links={[
-              ["Términos", "#"],
-              ["Privacidad", "#"],
-              ["Cookies", "#"],
+              [t.footer.terms, "#"],
+              [t.footer.privacy, "#"],
+              [t.footer.cookies, "#"],
             ]}
           />
         </div>
@@ -61,7 +65,7 @@ export function Footer() {
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 text-xs text-mist-500">
           <span>© {new Date().getFullYear()} studiOS · Growth Intelligence</span>
           <span className="tracking-[0.2em] uppercase">
-            Hecho en Córdoba · Argentina 🇦🇷
+            {t.footer.rights}
           </span>
         </div>
       </div>

@@ -7,10 +7,12 @@ import { Play, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { HeroTerminalMock } from "./hero-terminal-mock";
 import { useWaitlist } from "@/components/waitlist/waitlist-provider";
+import { useLocale } from "@/lib/i18n/locale-context";
 
 export function Hero() {
   const reduced = useReducedMotion();
   const waitlist = useWaitlist();
+  const { t, locale } = useLocale();
 
   return (
     <section
@@ -34,11 +36,13 @@ export function Hero() {
                   <span className="absolute inset-0 animate-ping rounded-full bg-neon-400 opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-neon-400" />
                 </span>
-                En vivo en Monaco Barber · Córdoba
+                {locale === "en"
+                  ? "Live at Monaco Barber · Córdoba"
+                  : "En vivo en Monaco Barber · Córdoba"}
               </span>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-mist-300">
                 <Sparkles className="h-3 w-3 text-neon-300" />
-                Nueva generación de software
+                {t.hero.kicker}
               </span>
             </motion.div>
 
@@ -48,9 +52,9 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 font-display text-balance text-[clamp(2.6rem,7vw,5.25rem)] font-semibold leading-[0.98] tracking-tight text-white"
             >
-              Tu barbería,
+              {t.hero.titleTop}
               <br />
-              <span className="gradient-text-neon">en piloto automático.</span>
+              <span className="gradient-text-neon">{t.hero.titleBottom}</span>
             </motion.h1>
 
             <motion.p
@@ -59,9 +63,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-mist-300 sm:text-xl"
             >
-              Reconocimiento facial, CRM y finanzas en un solo sistema. Tus
-              clientes entran, se escanean con Face ID y el barbero ya sabe
-              quién es, qué se cortó la última vez y cómo le gusta.
+              {t.hero.body}
             </motion.p>
 
             <motion.div
@@ -71,7 +73,7 @@ export function Hero() {
               className="mt-10 flex flex-wrap items-center gap-3"
             >
               <CTAButton onClick={waitlist.open} size="lg" variant="primary">
-                Pedí una demo
+                {t.hero.ctaPrimary}
               </CTAButton>
               <Link
                 href="https://youtu.be/VTb9aPFzyZw"
@@ -81,7 +83,7 @@ export function Hero() {
                 <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white text-ink-950">
                   <Play className="h-3.5 w-3.5 translate-x-[1px]" fill="currentColor" />
                 </span>
-                Presentación de Tony · 8 min
+                {t.hero.ctaVideo}
               </Link>
             </motion.div>
           </div>
