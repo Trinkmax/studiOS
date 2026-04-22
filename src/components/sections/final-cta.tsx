@@ -6,8 +6,10 @@ import { AuroraBackground, GridBackground } from "@/components/ui/background";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
+import { useWaitlist } from "@/components/waitlist/waitlist-provider";
 
 export function FinalCtaSection() {
+  const waitlist = useWaitlist();
   return (
     <Section id="demo" className="relative overflow-hidden py-24 sm:py-28">
       <AuroraBackground className="opacity-80" />
@@ -37,7 +39,7 @@ export function FinalCtaSection() {
         </Reveal>
         <Reveal delay={0.2}>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <CTAButton href="#demo" size="lg" variant="primary">
+            <CTAButton onClick={waitlist.open} size="lg" variant="primary">
               Agendar demo · 15 min
             </CTAButton>
             <Link

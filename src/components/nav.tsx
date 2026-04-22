@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Command, Menu, X } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
+import { useWaitlist } from "@/components/waitlist/waitlist-provider";
 
 const links = [
   { href: "/check-in", label: "Check-in" },
@@ -23,6 +24,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [mac, setMac] = useState(true);
   const pathname = usePathname();
+  const waitlist = useWaitlist();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -107,12 +109,13 @@ export function Nav() {
             </kbd>
           </button>
           <Magnetic strength={0.2}>
-            <Link
-              href="/#demo"
+            <button
+              type="button"
+              onClick={waitlist.open}
               className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white text-ink-950 h-9 px-4 text-sm font-medium hover:bg-neon-200 transition-colors"
             >
               Pedí una demo
-            </Link>
+            </button>
           </Magnetic>
           <button
             type="button"
@@ -167,12 +170,16 @@ export function Nav() {
                   </span>
                   <span className="text-[10px] text-mist-500">⌘K</span>
                 </button>
-                <Link
-                  href="/#demo"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    waitlist.open();
+                  }}
                   className="mt-2 rounded-2xl bg-gradient-to-b from-neon-300 to-neon-500 text-ink-950 px-4 py-3 text-sm font-semibold text-center"
                 >
                   Pedí una demo · 15 min
-                </Link>
+                </button>
               </div>
             </div>
           </motion.div>

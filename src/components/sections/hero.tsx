@@ -6,9 +6,11 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Play, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { HeroTerminalMock } from "./hero-terminal-mock";
+import { useWaitlist } from "@/components/waitlist/waitlist-provider";
 
 export function Hero() {
   const reduced = useReducedMotion();
+  const waitlist = useWaitlist();
 
   return (
     <section
@@ -68,7 +70,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="mt-10 flex flex-wrap items-center gap-3"
             >
-              <CTAButton href="#demo" size="lg" variant="primary">
+              <CTAButton onClick={waitlist.open} size="lg" variant="primary">
                 Pedí una demo · 15 min
               </CTAButton>
               <Link

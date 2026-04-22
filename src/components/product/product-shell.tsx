@@ -11,6 +11,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { MobileFloatingCta } from "@/components/mobile-floating-cta";
+import { useWaitlist } from "@/components/waitlist/waitlist-provider";
 
 type Related = { href: string; label: string };
 
@@ -146,6 +147,7 @@ function RelatedModules({ items }: { items: Related[] }) {
 }
 
 function FinalCta() {
+  const waitlist = useWaitlist();
   return (
     <section className="relative px-5 sm:px-8 lg:px-12 pt-8 pb-24 sm:pb-28">
       <div className="relative mx-auto max-w-3xl text-center">
@@ -174,7 +176,7 @@ function FinalCta() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-7 flex flex-wrap justify-center gap-3"
         >
-          <CTAButton href="/#demo" variant="primary" size="lg">
+          <CTAButton onClick={waitlist.open} variant="primary" size="lg">
             Agendar demo
           </CTAButton>
           <Link

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CommandPalette } from "@/components/command-palette";
+import { WaitlistProvider } from "@/components/waitlist/waitlist-provider";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://studios.com.ar";
@@ -66,8 +67,10 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className="dark">
       <body className="font-sans antialiased overflow-x-hidden">
-        {children}
-        <CommandPalette />
+        <WaitlistProvider>
+          {children}
+          <CommandPalette />
+        </WaitlistProvider>
         <Analytics />
       </body>
     </html>

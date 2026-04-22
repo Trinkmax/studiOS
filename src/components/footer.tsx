@@ -45,7 +45,7 @@ export function Footer() {
               ["Monaco Barber", "https://www.google.com/search?q=monaco+barber+córdoba"],
               ["Historia", "#top"],
               ["Carreras", "#"],
-              ["Contacto", "#demo"],
+              ["Contacto", "mailto:hola@studios.app"],
             ]}
           />
           <FooterCol

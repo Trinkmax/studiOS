@@ -16,9 +16,11 @@ import {
   Command,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWaitlist } from "@/components/waitlist/waitlist-provider";
 
 type Item = {
-  href: string;
+  href?: string;
+  action?: "waitlist";
   label: string;
   icon: React.ElementType;
   hint: string;
@@ -32,7 +34,7 @@ const items: Item[] = [
   { href: "/estadisticas", label: "Estadísticas", icon: BarChart3, hint: "KPIs y tendencias" },
   { href: "/finanzas", label: "Finanzas", icon: BadgeDollarSign, hint: "sueldos, comisiones" },
   { href: "/equipo", label: "Equipo", icon: Users, hint: "asistencia con Face ID" },
-  { href: "/#demo", label: "Agendar demo", icon: SquareArrowOutUpRight, hint: "15 min" },
+  { action: "waitlist", label: "Agendar demo", icon: SquareArrowOutUpRight, hint: "15 min" },
 ];
 
 export function CommandPalette() {
@@ -40,6 +42,16 @@ export function CommandPalette() {
   const [q, setQ] = useState("");
   const [sel, setSel] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const waitlist = useWaitlist();
+
+  const activate = (it: Item) => {
+    setOpen(false);
+    if (it.action === "waitlist") {
+      setTimeout(() => waitlist.open(), 100);
+    } else if (it.href) {
+      window.location.href = it.href;
+    }
+  };
 
   const filtered = items.filter((it) => {
     if (!q.trim()) return true;
@@ -65,7 +77,7 @@ export function CommandPalette() {
           setSel((s) => Math.max(s - 1, 0));
         } else if (e.key === "Enter" && filtered[sel]) {
           e.preventDefault();
-          window.location.href = filtered[sel].href;
+          activate(filtered[sel]);
         }
       }
     };
@@ -129,19 +141,12 @@ export function CommandPalette() {
               ) : (
                 filtered.map((it, i) => {
                   const Icon = it.icon;
-                  return (
-                    <Link
-                      key={it.href + it.label}
-                      href={it.href}
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors",
-                        i === sel
-                          ? "bg-white/[0.06]"
-                          : "hover:bg-white/[0.03]"
-                      )}
-                      onMouseEnter={() => setSel(i)}
-                    >
+                  const rowClass = cn(
+                    "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors",
+                    i === sel ? "bg-white/[0.06]" : "hover:bg-white/[0.03]"
+                  );
+                  const body = (
+                    <>
                       <span
                         className={cn(
                           "grid h-8 w-8 place-items-center rounded-md border",
@@ -163,6 +168,30 @@ export function CommandPalette() {
                           ↵
                         </kbd>
                       )}
+                    </>
+                  );
+                  if (it.action) {
+                    return (
+                      <button
+                        key={it.label}
+                        type="button"
+                        onClick={() => activate(it)}
+                        onMouseEnter={() => setSel(i)}
+                        className={rowClass}
+                      >
+                        {body}
+                      </button>
+                    );
+                  }
+                  return (
+                    <Link
+                      key={(it.href ?? "") + it.label}
+                      href={it.href ?? "/"}
+                      onClick={() => setOpen(false)}
+                      className={rowClass}
+                      onMouseEnter={() => setSel(i)}
+                    >
+                      {body}
                     </Link>
                   );
                 })
