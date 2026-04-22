@@ -182,19 +182,19 @@ export default function CRMPage() {
             </>
           }
         >
-          <div className="grid grid-cols-[170px_1fr] sm:grid-cols-[200px_1fr] rounded-2xl border border-white/10 overflow-hidden bg-ink-950/40">
+          <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] rounded-2xl border border-white/10 overflow-hidden bg-ink-950/40">
             {/* Chat list */}
-            <div className="border-r border-white/5 min-h-[480px] overflow-hidden">
-              <div className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] text-mist-500 border-b border-white/5">
+            <div className="border-b md:border-b-0 md:border-r border-white/5 md:min-h-[480px] overflow-hidden">
+              <div className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] text-mist-500 border-b border-white/5 sticky top-0 bg-ink-950/80 backdrop-blur z-10">
                 Inbox · {filtered.length}
               </div>
-              <div className="divide-y divide-white/5 overflow-y-auto max-h-[440px]">
+              <div className="flex md:block md:divide-y md:divide-white/5 overflow-x-auto md:overflow-x-visible md:overflow-y-auto md:max-h-[440px] snap-x md:snap-none">
                 {filtered.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => setActiveId(c.id)}
-                    className={`flex w-full items-start gap-2.5 px-3 py-2.5 text-left transition-colors ${
-                      c.id === activeId ? "bg-white/[0.04]" : "hover:bg-white/[0.02]"
+                    className={`flex shrink-0 w-[180px] md:w-full items-start gap-2.5 px-3 py-2.5 text-left snap-start transition-colors border-r md:border-r-0 border-white/5 ${
+                      c.id === activeId ? "bg-white/[0.04] md:bg-white/[0.04]" : "hover:bg-white/[0.02]"
                     }`}
                   >
                     <div className="relative">
@@ -246,19 +246,19 @@ export default function CRMPage() {
             </div>
 
             {/* Thread */}
-            <div className="relative min-h-[480px]">
-              <div className="flex items-center gap-2 border-b border-white/5 bg-black/30 px-4 py-2.5">
+            <div className="flex min-h-[420px] flex-col md:min-h-[480px]">
+              <div className="flex items-center gap-2 border-b border-white/5 bg-black/30 px-3 sm:px-4 py-2.5">
                 <span className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-neon-400 text-[10px] font-semibold text-ink-950">
                   {active.initials}
                 </span>
-                <div className="text-[13px]">
-                  <span className="font-medium text-white">{active.name}</span>{" "}
+                <div className="min-w-0 text-[13px]">
+                  <span className="font-medium text-white truncate">{active.name}</span>{" "}
                   <span className="text-mist-500">·</span>{" "}
                   <span className="text-mist-400">
                     {active.channel === "wa" ? "WhatsApp" : "Instagram"}
                   </span>
                 </div>
-                <Tag tone="amber" className="ml-auto">
+                <Tag tone="amber" className="ml-auto shrink-0 hidden sm:inline-flex">
                   Cliente recurrente
                 </Tag>
               </div>
@@ -269,7 +269,7 @@ export default function CRMPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25 }}
-                  className="flex flex-col gap-2 p-4"
+                  className="flex flex-1 flex-col gap-2 p-3 sm:p-4"
                 >
                   {active.thread.map((m, i) => (
                     <div
@@ -279,7 +279,7 @@ export default function CRMPage() {
                       }`}
                     >
                       <div
-                        className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-[13px] leading-relaxed ${
+                        className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-[13px] leading-relaxed ${
                           m.side === "out"
                             ? "border border-neon-400/30 bg-neon-600/20 text-mist-100"
                             : "border border-white/10 bg-white/5 text-mist-200"
@@ -293,14 +293,14 @@ export default function CRMPage() {
               </AnimatePresence>
 
               {/* IA suggestion composer */}
-              <div className="absolute inset-x-4 bottom-4">
+              <div className="p-3 sm:p-4 pt-0">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3">
                   <div className="flex items-center gap-2 pb-2 border-b border-white/5">
-                    <Sparkles className="h-3.5 w-3.5 text-neon-300" />
+                    <Sparkles className="h-3.5 w-3.5 text-neon-300 shrink-0" />
                     <span className="text-[11px] uppercase tracking-[0.12em] text-neon-300">
                       IA · sugerencia
                     </span>
-                    <span className="ml-auto text-[10px] text-mist-500">
+                    <span className="ml-auto hidden sm:inline text-[10px] text-mist-500">
                       Anthropic · Claude
                     </span>
                   </div>
@@ -310,24 +310,26 @@ export default function CRMPage() {
                       <span className="ml-0.5 inline-block h-3 w-1.5 -mb-0.5 animate-pulse bg-neon-400" />
                     )}
                   </div>
-                  <div className="mt-3 flex items-center gap-2">
+                  <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
                     <input
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       placeholder="O escribí una respuesta manual..."
-                      className="flex-1 rounded-lg border border-white/10 bg-ink-950 px-3 py-1.5 text-[12px] text-white placeholder:text-mist-500 focus:outline-none focus:border-white/30"
+                      className="flex-1 rounded-lg border border-white/10 bg-ink-950 px-3 py-2 text-[13px] text-white placeholder:text-mist-500 focus:outline-none focus:border-white/30"
                     />
-                    <button className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[11px] text-mist-200 hover:bg-white/[0.06]">
-                      Editar IA
-                    </button>
-                    <button
-                      onClick={() => {
-                        setInput("");
-                      }}
-                      className="inline-flex items-center gap-1 rounded-lg bg-gradient-to-b from-neon-300 to-neon-500 px-3 py-1.5 text-[11px] font-semibold text-ink-950"
-                    >
-                      <Send className="h-3 w-3" /> Enviar
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1 rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-2 text-[11px] text-mist-200 hover:bg-white/[0.06]">
+                        Editar IA
+                      </button>
+                      <button
+                        onClick={() => {
+                          setInput("");
+                        }}
+                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1 rounded-lg bg-gradient-to-b from-neon-300 to-neon-500 px-3 py-2 text-[11px] font-semibold text-ink-950"
+                      >
+                        <Send className="h-3 w-3" /> Enviar
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -137,7 +137,7 @@ export function SystemWindow({
         {/* Main */}
         <main
           className={cn(
-            "min-w-0 bg-ink-900 p-4 sm:p-5 lg:p-6",
+            "min-w-0 bg-ink-900 p-3 sm:p-5 lg:p-6",
             fullHeight && "min-h-[520px]"
           )}
         >
@@ -145,19 +145,19 @@ export function SystemWindow({
             <div className="flex items-center gap-1.5 text-[11px] text-mist-500">
               <span>{breadcrumb}</span>
               <ChevronRight className="h-3 w-3" />
-              <span className="text-mist-300">{title}</span>
+              <span className="text-mist-300 truncate">{title}</span>
             </div>
-            <div className="mt-2 flex flex-wrap items-start justify-between gap-3">
+            <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <h3 className="font-display text-xl sm:text-2xl font-semibold text-white">
+                <h3 className="font-display text-lg sm:text-2xl font-semibold text-white">
                   {title}
                 </h3>
                 {subtitle && (
-                  <p className="mt-1 text-[13px] text-mist-400">{subtitle}</p>
+                  <p className="mt-1 text-[12px] sm:text-[13px] text-mist-400">{subtitle}</p>
                 )}
               </div>
               {topActions && (
-                <div className="flex flex-wrap items-center gap-1.5">
+                <div className="-mx-4 sm:mx-0 flex items-center gap-1.5 overflow-x-auto hide-scrollbar px-4 sm:flex-wrap sm:px-0 sm:overflow-visible [&>*]:shrink-0">
                   {topActions}
                 </div>
               )}

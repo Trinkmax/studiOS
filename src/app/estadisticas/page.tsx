@@ -179,40 +179,42 @@ export default function StatsPage() {
                     <div className="text-[12px] text-white">Heatmap semana</div>
                     <Tag tone="violet">ocupación</Tag>
                   </div>
-                  <div className="mt-4 grid grid-cols-[auto_1fr] gap-2">
-                    <div className="flex flex-col gap-1 text-[10px] text-mist-400 pt-4">
-                      {["L", "M", "X", "J", "V", "S"].map((d) => (
-                        <span key={d} className="h-5">{d}</span>
-                      ))}
-                    </div>
-                    <div>
-                      <div className="grid grid-cols-12 gap-1 text-[9px] text-mist-500 mb-1">
-                        {[10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map((h) => (
-                          <span key={h} className="text-center">{h}</span>
+                  <div className="mt-4 overflow-x-auto -mx-2 px-2 sm:mx-0 sm:px-0">
+                    <div className="grid grid-cols-[auto_1fr] gap-2 min-w-[420px]">
+                      <div className="flex flex-col gap-1 text-[10px] text-mist-400 pt-4">
+                        {["L", "M", "X", "J", "V", "S"].map((d) => (
+                          <span key={d} className="h-5">{d}</span>
                         ))}
                       </div>
-                      <div className="grid grid-rows-6 gap-1">
-                        {occupancyHeat.map((row, r) => (
-                          <div key={r} className="grid grid-cols-12 gap-1">
-                            {row.map((v, c) => (
-                              <motion.div
-                                key={c}
-                                initial={{ opacity: 0, scale: 0.6 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: (r * 12 + c) * 0.005 }}
-                                className="aspect-square rounded-sm"
-                                style={{
-                                  background: `rgba(36, 224, 140, ${v / 120})`,
-                                  boxShadow:
-                                    v > 80
-                                      ? "0 0 6px rgba(36,224,140,0.45)"
-                                      : undefined,
-                                }}
-                                title={`${v}%`}
-                              />
-                            ))}
-                          </div>
-                        ))}
+                      <div>
+                        <div className="grid grid-cols-12 gap-1 text-[9px] text-mist-500 mb-1">
+                          {[10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map((h) => (
+                            <span key={h} className="text-center">{h}</span>
+                          ))}
+                        </div>
+                        <div className="grid grid-rows-6 gap-1">
+                          {occupancyHeat.map((row, r) => (
+                            <div key={r} className="grid grid-cols-12 gap-1">
+                              {row.map((v, c) => (
+                                <motion.div
+                                  key={c}
+                                  initial={{ opacity: 0, scale: 0.6 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: (r * 12 + c) * 0.005 }}
+                                  className="aspect-square rounded-sm"
+                                  style={{
+                                    background: `rgba(36, 224, 140, ${v / 120})`,
+                                    boxShadow:
+                                      v > 80
+                                        ? "0 0 6px rgba(36,224,140,0.45)"
+                                        : undefined,
+                                  }}
+                                  title={`${v}%`}
+                                />
+                              ))}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -233,9 +235,9 @@ export default function StatsPage() {
                   </div>
                   <div className="mt-4 space-y-2">
                     {barberBars.map((b, i) => (
-                      <div key={b.name} className="flex items-center gap-3 text-[12px]">
-                        <span className="w-16 text-mist-200">{b.name}</span>
-                        <div className="relative h-6 flex-1 overflow-hidden rounded-full bg-white/5">
+                      <div key={b.name} className="flex items-center gap-2 sm:gap-3 text-[12px]">
+                        <span className="w-14 sm:w-16 truncate text-mist-200">{b.name}</span>
+                        <div className="relative h-5 sm:h-6 flex-1 overflow-hidden rounded-full bg-white/5">
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${b.v}%` }}
@@ -247,7 +249,7 @@ export default function StatsPage() {
                             }`}
                           />
                         </div>
-                        <span className="w-12 text-right tabular-nums text-white">
+                        <span className="w-10 sm:w-12 text-right tabular-nums text-white">
                           {Math.round(b.v * 5.6)}
                         </span>
                       </div>

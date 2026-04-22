@@ -32,9 +32,9 @@ export function ProductShell({
     <>
       <NoiseOverlay opacity={0.035} />
       <Nav />
-      <main className="relative pt-24 sm:pt-28">
+      <main className="relative pt-20 sm:pt-28">
         <Hero kicker={kicker} title={title} description={description} />
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 lg:px-12">
           {children}
         </div>
         {related && related.length > 0 && (
@@ -58,7 +58,7 @@ function Hero({
   description: ReactNode;
 }) {
   return (
-    <section className="relative px-5 sm:px-8 lg:px-12 pb-12 sm:pb-16 lg:pb-20">
+    <section className="relative px-4 sm:px-8 lg:px-12 pb-10 sm:pb-16 lg:pb-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[400px] opacity-60"
@@ -76,7 +76,7 @@ function Hero({
           Volver al inicio
         </Link>
         <Reveal>
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] text-mist-300">
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] sm:text-xs font-medium uppercase tracking-[0.12em] text-mist-300">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inset-0 animate-ping rounded-full bg-neon-400 opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-neon-400" />
@@ -85,12 +85,12 @@ function Hero({
           </div>
         </Reveal>
         <Reveal delay={0.05}>
-          <h1 className="mt-5 font-display text-balance text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.02] tracking-tight text-white">
+          <h1 className="mt-4 sm:mt-5 font-display text-balance text-[2rem] sm:text-5xl lg:text-6xl font-semibold leading-[1.05] sm:leading-[1.02] tracking-tight text-white">
             {title}
           </h1>
         </Reveal>
         <Reveal delay={0.1}>
-          <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-mist-300">
+          <p className="mt-4 sm:mt-5 max-w-2xl text-pretty text-[15px] sm:text-lg leading-relaxed text-mist-300">
             {description}
           </p>
         </Reveal>
@@ -205,23 +205,23 @@ export function ProductSection({
   className?: string;
 }) {
   return (
-    <section className={cn("py-16 sm:py-20", className)}>
+    <section className={cn("py-12 sm:py-20", className)}>
       <Reveal>
         <div className="max-w-3xl">
           {kicker && (
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] text-mist-300">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] sm:text-xs font-medium uppercase tracking-[0.12em] text-mist-300">
               {kicker}
             </div>
           )}
-          <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.04] tracking-tight text-white">
+          <h2 className="mt-4 font-display text-balance text-[1.6rem] sm:text-4xl lg:text-5xl font-semibold leading-[1.08] sm:leading-[1.04] tracking-tight text-white">
             {title}
           </h2>
           {lead && (
-            <p className="mt-4 text-lg leading-relaxed text-mist-300">{lead}</p>
+            <p className="mt-3 sm:mt-4 text-[15px] sm:text-lg leading-relaxed text-mist-300">{lead}</p>
           )}
         </div>
       </Reveal>
-      <div className="mt-8 sm:mt-12">{children}</div>
+      <div className="mt-6 sm:mt-12">{children}</div>
     </section>
   );
 }

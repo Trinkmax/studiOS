@@ -254,11 +254,11 @@ export default function CheckInPage() {
                 </AnimatePresence>
               </div>
 
-              <div className="mt-5 flex items-center gap-2">
+              <div className="mt-4 flex items-center gap-2">
                 {state === "idle" || state === "recognized" || state === "new" ? (
                   <button
                     onClick={state === "idle" ? start : reset}
-                    className="flex-1 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-neon-300 to-neon-500 px-4 text-sm font-semibold text-ink-950 transition-transform hover:-translate-y-0.5"
+                    className="flex-1 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-neon-300 to-neon-500 px-3 text-sm font-semibold text-ink-950 transition-transform hover:-translate-y-0.5"
                   >
                     {state === "idle" ? (
                       <>
@@ -275,13 +275,17 @@ export default function CheckInPage() {
                 ) : (
                   <button
                     disabled
-                    className="flex-1 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-4 text-sm font-medium text-mist-400"
+                    className="flex-1 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 text-sm font-medium text-mist-400"
                   >
                     Escaneando...
                   </button>
                 )}
-                <button className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 text-sm text-white">
-                  <UserPlus className="h-4 w-4" /> Soy nuevo
+                <button
+                  className="shrink-0 inline-flex h-11 items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 sm:px-4 text-sm text-white"
+                  aria-label="Soy nuevo"
+                >
+                  <UserPlus className="h-4 w-4" />
+                  <span className="hidden sm:inline">Soy nuevo</span>
                 </button>
               </div>
             </div>

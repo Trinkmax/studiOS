@@ -157,8 +157,8 @@ export default function FinancePage() {
                     </div>
                     <Tag tone="neon">registrado auto</Tag>
                   </div>
-                  <div className="mt-3 overflow-hidden rounded-xl border border-white/5">
-                    <table className="w-full text-[12px]">
+                  <div className="mt-3 overflow-x-auto rounded-xl border border-white/5">
+                    <table className="w-full min-w-[440px] text-[12px]">
                       <thead>
                         <tr className="text-left bg-black/30 border-b border-white/5 text-[10px] uppercase tracking-[0.15em] text-mist-500">
                           <th className="px-3 py-2">Fecha</th>
@@ -179,7 +179,7 @@ export default function FinancePage() {
                             <td className="px-3 py-2 text-mist-300 whitespace-nowrap">
                               {d}
                             </td>
-                            <td className="px-3 py-2">
+                            <td className="px-3 py-2 whitespace-nowrap">
                               <Tag
                                 tone={
                                   t.includes("producto")
@@ -193,7 +193,7 @@ export default function FinancePage() {
                               </Tag>
                             </td>
                             <td className="px-3 py-2 text-mist-400">{m}</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-white">
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-white whitespace-nowrap">
                               {$}
                             </td>
                           </tr>
@@ -202,17 +202,17 @@ export default function FinancePage() {
                     </table>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <button className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-b from-neon-300 to-neon-500 px-3 py-2 text-[12px] font-semibold text-ink-950">
+                  <div className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+                    <button className="col-span-2 inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-b from-neon-300 to-neon-500 px-3 py-2 text-[12px] font-semibold text-ink-950 sm:col-span-1">
                       <Coins className="h-3.5 w-3.5" /> Liquidar período
                     </button>
-                    <button className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white">
+                    <button className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white">
                       Registrar sueldo
                     </button>
-                    <button className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white">
+                    <button className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white">
                       Generar comisiones
                     </button>
-                    <button className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white">
+                    <button className="col-span-2 inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white sm:col-span-1">
                       + Bono / Adelanto
                     </button>
                   </div>
@@ -268,8 +268,8 @@ export default function FinancePage() {
                 <div className="text-[13px] font-semibold text-white mb-3">
                   {tab === "egresos" ? "Egresos del período" : "Gastos fijos"}
                 </div>
-                <div className="overflow-hidden rounded-xl border border-white/5">
-                  <table className="w-full text-[12px]">
+                <div className="overflow-x-auto rounded-xl border border-white/5">
+                  <table className="w-full min-w-[380px] text-[12px]">
                     <thead>
                       <tr className="text-left bg-black/30 border-b border-white/5 text-[10px] uppercase tracking-[0.15em] text-mist-500">
                         <th className="px-3 py-2">Categoría</th>
