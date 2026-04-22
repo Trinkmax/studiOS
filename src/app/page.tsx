@@ -72,10 +72,10 @@ export default function Page() {
         />
 
         <ReviewsSection />
+        <TonyVideoSection />
         <TestimonialsSection />
         <BeforeAfterSection />
         <FinalCtaSection />
-        <TonyVideoSection />
       </main>
       <Footer />
       <MobileFloatingCta />
