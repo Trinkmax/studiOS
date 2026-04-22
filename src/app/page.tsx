@@ -21,31 +21,6 @@ export default function Page() {
         <Hero />
         <LogosStrip />
 
-        <Cinematic
-          id="face-id"
-          src="/media/check-in.jpeg"
-          alt="Terminal de check-in con reconocimiento facial en la barbería"
-          kicker="● Face ID · 68 puntos"
-          title={
-            <>
-              El cliente entra.
-              <br />
-              Se escanea.
-              <br />
-              <span className="gradient-text-neon">Listo.</span>
-            </>
-          }
-          body={
-            <>
-              Reconocimiento en menos de 2 segundos. Sin contacto, sin fricción,
-              sin app. Tocá para ver el módulo completo con demo interactivo.
-            </>
-          }
-          chips={["Ver módulo Check-in →"]}
-          align="left"
-          priority
-        />
-
         <ProductGridSection />
 
         <Cinematic
