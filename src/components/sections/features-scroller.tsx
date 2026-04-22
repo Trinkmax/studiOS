@@ -14,7 +14,13 @@ import {
   Sparkles,
 } from "lucide-react";
 
-const features = [
+type FeatureTone = "neon" | "violet" | "amber";
+const features: Array<{
+  icon: React.ElementType;
+  tone: FeatureTone;
+  title: string;
+  desc: string;
+}> = [
   {
     icon: MessageSquare,
     tone: "neon",
@@ -117,7 +123,7 @@ function FeatureCard({
   desc,
 }: {
   icon: React.ElementType;
-  tone: keyof typeof toneClasses;
+  tone: FeatureTone;
   title: string;
   desc: string;
 }) {
