@@ -21,8 +21,6 @@ export default function Page() {
         <Hero />
         <LogosStrip />
 
-        <ProductGridSection />
-
         <Cinematic
           id="panel"
           src="/media/panel-barberos.jpeg"
@@ -45,6 +43,8 @@ export default function Page() {
           align="right"
           eyebrowTone="violet"
         />
+
+        <ProductGridSection />
 
         <ReviewsSection />
         <TonyVideoSection />
