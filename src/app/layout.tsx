@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CommandPalette } from "@/components/command-palette";
 
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body className="font-sans antialiased overflow-x-hidden">
         {children}
         <CommandPalette />
+        <Analytics />
       </body>
     </html>
   );

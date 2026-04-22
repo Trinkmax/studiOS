@@ -9,6 +9,7 @@ import { ReviewsSection } from "@/components/sections/reviews";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { BeforeAfterSection } from "@/components/sections/before-after";
 import { FinalCtaSection } from "@/components/sections/final-cta";
+import { TonyVideoSection } from "@/components/sections/tony-video";
 import { MobileFloatingCta } from "@/components/mobile-floating-cta";
 
 export default function Page() {
@@ -74,6 +75,7 @@ export default function Page() {
         <TestimonialsSection />
         <BeforeAfterSection />
         <FinalCtaSection />
+        <TonyVideoSection />
       </main>
       <Footer />
       <MobileFloatingCta />
