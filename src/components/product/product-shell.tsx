@@ -167,7 +167,7 @@ function FinalCta() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mt-3 text-mist-400"
         >
-          15 minutos · te mostramos todo el módulo en vivo.
+          Te mostramos todo el módulo en vivo.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 10 }}

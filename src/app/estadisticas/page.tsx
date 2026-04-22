@@ -23,7 +23,7 @@ const baseBars = [
 
 const barberBars = [
   { name: "Tony", v: 98 },
-  { name: "Nico U.", v: 74 },
+  { name: "Nico M.", v: 74 },
   { name: "Chipi", v: 62 },
   { name: "Fabrizio", v: 58 },
   { name: "Simón", v: 42 },

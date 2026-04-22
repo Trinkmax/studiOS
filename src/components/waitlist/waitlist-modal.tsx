@@ -972,8 +972,8 @@ function SuccessScreen({
         transition={{ delay: 0.4, duration: 0.5 }}
         className="mt-5 max-w-xl text-base text-mist-300 sm:text-lg"
       >
-        Te escribimos en menos de 24 hs para coordinar la demo de 15 minutos. Si
-        querés adelantar el turno, dale play al WhatsApp.
+        Te escribimos en menos de 24 hs para coordinar la demo. Si querés
+        adelantar el turno, dale play al WhatsApp.
       </motion.p>
 
       <motion.div

@@ -178,7 +178,7 @@ export function Nav() {
                   }}
                   className="mt-2 rounded-2xl bg-gradient-to-b from-neon-300 to-neon-500 text-ink-950 px-4 py-3 text-sm font-semibold text-center"
                 >
-                  Pedí una demo · 15 min
+                  Pedí una demo
                 </button>
               </div>
             </div>

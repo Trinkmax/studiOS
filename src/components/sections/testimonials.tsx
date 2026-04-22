@@ -25,7 +25,7 @@ const testimonials: T[] = [
   {
     quote:
       "El Face ID lo cambia todo. El cliente se escanea, yo ya veo qué le gusta. Corto con más foco y los tiempos muertos de entrada desaparecieron.",
-    name: "Nico U.",
+    name: "Nico Maidana",
     role: "Barbero · Rondeau",
     avatar: "N",
     metric: { label: "Check-in", value: "2 s" },

@@ -484,7 +484,7 @@ function FinanceMock() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {[
-              ["Nico Ulloque", "Comisión", "$62.000"],
+              ["Nico Maidana", "Comisión", "$62.000"],
               ["Chipi", "Comisión prod.", "$18.000"],
               ["Tony", "Bono", "$40.000"],
               ["Simón", "Retro", "$6.000"],

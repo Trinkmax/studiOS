@@ -71,7 +71,7 @@ export function Hero() {
               className="mt-10 flex flex-wrap items-center gap-3"
             >
               <CTAButton onClick={waitlist.open} size="lg" variant="primary">
-                Pedí una demo · 15 min
+                Pedí una demo
               </CTAButton>
               <Link
                 href="https://youtu.be/VTb9aPFzyZw"

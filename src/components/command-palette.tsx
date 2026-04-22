@@ -34,7 +34,7 @@ const items: Item[] = [
   { href: "/estadisticas", label: "Estadísticas", icon: BarChart3, hint: "KPIs y tendencias" },
   { href: "/finanzas", label: "Finanzas", icon: BadgeDollarSign, hint: "sueldos, comisiones" },
   { href: "/equipo", label: "Equipo", icon: Users, hint: "asistencia con Face ID" },
-  { action: "waitlist", label: "Agendar demo", icon: SquareArrowOutUpRight, hint: "15 min" },
+  { action: "waitlist", label: "Agendar demo", icon: SquareArrowOutUpRight, hint: "pedir una demo" },
 ];
 
 export function CommandPalette() {

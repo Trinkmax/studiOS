@@ -33,7 +33,7 @@ const members = [
   },
   {
     id: "nico",
-    name: "Nico Ulloque",
+    name: "Nico Maidana",
     role: "Barbero senior",
     branch: "Rondeau",
     checkIn: "10:01",

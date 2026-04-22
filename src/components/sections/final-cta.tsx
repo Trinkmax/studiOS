@@ -21,7 +21,7 @@ export function FinalCtaSection() {
               <span className="absolute inset-0 animate-ping rounded-full bg-neon-400 opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-neon-400" />
             </span>
-            15 minutos · te mostramos todo
+            Te mostramos todo en vivo
           </span>
         </Reveal>
         <Reveal delay={0.05}>
@@ -40,7 +40,7 @@ export function FinalCtaSection() {
         <Reveal delay={0.2}>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <CTAButton onClick={waitlist.open} size="lg" variant="primary">
-              Agendar demo · 15 min
+              Agendar demo
             </CTAButton>
             <Link
               href="https://wa.me/5493510000000"

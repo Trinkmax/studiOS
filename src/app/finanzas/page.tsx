@@ -117,7 +117,7 @@ export default function FinancePage() {
                       color="neon"
                     />
                     <CommissionSlider
-                      name="Nico Ulloque"
+                      name="Nico Maidana"
                       value={nico}
                       onChange={setNico}
                       base={238000}
@@ -152,7 +152,7 @@ export default function FinancePage() {
                     <div className="flex items-center gap-2">
                       <FileText className="h-4 w-4 text-amber-400" />
                       <span className="text-[13px] font-semibold text-white">
-                        Reportes pendientes · Nico U.
+                        Reportes pendientes · Nico M.
                       </span>
                     </div>
                     <Tag tone="neon">registrado auto</Tag>
