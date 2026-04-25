@@ -5,6 +5,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://studios.com.ar";
 const routes = [
   "/",
   "/en",
+  "/tour",
+  "/en/tour",
   "/check-in",
   "/panel",
   "/crm",

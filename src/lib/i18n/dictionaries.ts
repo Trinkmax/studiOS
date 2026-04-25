@@ -4,6 +4,7 @@ export const dict = {
   es: {
     nav: {
       modules: [
+        { href: "/tour", label: "Tour" },
         { href: "/check-in", label: "Check-in" },
         { href: "/panel", label: "Panel" },
         { href: "/crm", label: "CRM" },
@@ -13,9 +14,20 @@ export const dict = {
       ],
       search: "Buscar",
       searchFull: "Buscar módulos, páginas, acciones…",
-      cta: "Pedí una demo",
+      cta: "Sumarme a la waitlist",
       menu: "Menú",
       switchTo: "English",
+    },
+    homeConversion: {
+      kicker: "Waitlist abierta · Cupos limitados",
+      titleTop: "¿Querés convertir tu barbería en una",
+      titleBottom: "Smart Barber?",
+      body: "Mirá a Tony en 90 segundos y sumate a la waitlist. Te mostramos cómo Face ID, CRM y panel del barbero corren tu local en piloto automático.",
+      ctaPrimary: "Sumarme a la waitlist",
+      perk1: "✓ Sin tarjeta",
+      perk2: "✓ Implementación en 48 hs",
+      perk3: "✓ Cupos limitados por ciudad",
+      tourLink: "Ver el tour completo →",
     },
     hero: {
       kicker: "Piloto automático para barberías",
@@ -76,7 +88,7 @@ export const dict = {
       check2: "✓ Migración asistida",
       check3: "✓ Implementación en 48 hs",
     },
-    mobileCta: "Pedí tu demo",
+    mobileCta: "Sumarme a la waitlist",
     footer: {
       tagline:
         "El sistema operativo de la barbería moderna. Hecho en Córdoba, Argentina — con gente que corta pelo y escribe código.",
@@ -234,6 +246,7 @@ export const dict = {
   en: {
     nav: {
       modules: [
+        { href: "/en/tour", label: "Tour" },
         { href: "/check-in", label: "Check-in" },
         { href: "/panel", label: "Panel" },
         { href: "/crm", label: "CRM" },
@@ -243,9 +256,20 @@ export const dict = {
       ],
       search: "Search",
       searchFull: "Search modules, pages, actions…",
-      cta: "Request a demo",
+      cta: "Join the waitlist",
       menu: "Menu",
       switchTo: "Español",
+    },
+    homeConversion: {
+      kicker: "Waitlist open · Limited spots",
+      titleTop: "Want to turn your barbershop into a",
+      titleBottom: "Smart Barber?",
+      body: "Watch Tony in 90 seconds and join the waitlist. We'll show you how Face ID, CRM and the barber panel put your shop on autopilot.",
+      ctaPrimary: "Join the waitlist",
+      perk1: "✓ No credit card",
+      perk2: "✓ Live in 48 hours",
+      perk3: "✓ Limited spots per city",
+      tourLink: "See the full tour →",
     },
     hero: {
       kicker: "Autopilot for barbershops",
@@ -306,7 +330,7 @@ export const dict = {
       check2: "✓ We handle migration",
       check3: "✓ Live in 48 hours",
     },
-    mobileCta: "Request a demo",
+    mobileCta: "Join the waitlist",
     footer: {
       tagline:
         "The operating system for the modern barbershop. Built in Córdoba, Argentina — by people who cut hair and write code.",
